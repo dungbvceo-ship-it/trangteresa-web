@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Checklist điện tử | ETM Reader</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#C40102">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="images/logo.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="style.css">
+<script src="config.js"></script>
+<style>
+body{background:var(--cream)}
+.app{padding-top:20px;padding-bottom:96px}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.bar h1{font-size:clamp(22px,3vw,30px);font-weight:800}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px}
+.kids{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.kid{display:flex;flex-direction:column;gap:10px;text-align:left;border:1px solid var(--line);background:#fff;border-radius:18px;padding:16px;cursor:pointer;font:inherit;color:inherit}
+.kid:hover{border-color:#CFC7C3;box-shadow:var(--shadow-s)}
+.kid .top{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.kid b{font-size:17px}
+.kid small{color:var(--muted);font-size:13px}
+.meter{height:8px;border-radius:99px;background:#F1EBE8;overflow:hidden}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--green),#3FA45E);border-radius:99px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--red-50);color:var(--red)}
+.empty{text-align:center;padding:36px 18px;display:flex;flex-direction:column;gap:12px;align-items:center}
+.addrow{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) auto;gap:10px;align-items:end}
+@media (max-width:560px){.addrow{grid-template-columns:1fr 1fr}.addrow button{grid-column:span 2}}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:13px;color:var(--muted);margin:10px 0 14px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:14px;height:14px;border-radius:4px;border:1px solid rgba(0,0,0,.08)}
+.s0,.cell.s0,.blk.s0{background:#fff}.s1,.cell.s1,.blk.s1{background:#FFE7A8}.s2,.cell.s2,.blk.s2{background:#FFC46B}.s3,.cell.s3,.blk.s3{background:#3FA45E}.s4,.cell.s4,.blk.s4{background:#F4B4B1}
+.gridwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -4px;padding:0 4px}
+.road{border-collapse:separate;border-spacing:6px;min-width:720px}
+.road th{font-size:12px;font-weight:700;color:var(--muted);text-align:center;padding:2px}
+.road th.g b{display:block;color:var(--ink);font-size:13px}
+.road th.r{text-align:left;white-space:nowrap}
+.cell{width:100%;min-width:66px;min-height:52px;border-radius:12px;border:1.5px solid var(--line);font:inherit;font-size:13px;font-weight:800;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;color:var(--ink);background:#fff;padding:4px}
+.cell small{font-size:11px;font-weight:600;color:rgba(0,0,0,.55)}
+.cell.t-new{border-style:solid;border-width:2px;border-color:#C40102}
+.cell.t-snd{border-color:#1E7B3C;border-width:2px}
+.cell.t-rev{border-style:dashed}
+.cell.s3,.blk.s3{color:#fff}.cell.s3 small,.blk.s3 small{color:rgba(255,255,255,.88)}
+.glist{display:none;flex-direction:column;gap:12px}
+.gcard{border:1px solid var(--line);border-radius:16px;padding:12px}
+.gcard h4{font-size:15px;display:flex;justify-content:space-between;gap:8px;margin-bottom:8px}
+.gcard h4 span{font-weight:600;color:var(--muted);font-size:13px}
+.blks{display:flex;flex-wrap:wrap;gap:8px}
+.blk{flex:1 1 30%;min-width:92px;min-height:56px;border-radius:12px;border:1.5px solid var(--line);font:inherit;font-weight:800;font-size:14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--ink);padding:6px}
+.blk small{font-size:11px;font-weight:600;color:rgba(0,0,0,.55)}
+.blk.t-new{border:2px solid #C40102}.blk.t-snd{border:2px solid #1E7B3C}.blk.t-rev{border-style:dashed}
+@media (max-width:700px){.gridwrap{display:none}.glist{display:flex}}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0}
+.stat{background:var(--cream);border-radius:14px;padding:12px}
+.stat b{display:block;font-size:22px;font-weight:800}
+.stat span{font-size:13px;color:var(--muted)}
+@media (max-width:640px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.sheet-b{position:fixed;inset:auto 0 0 0;z-index:60;background:#fff;border-radius:22px 22px 0 0;box-shadow:0 -12px 40px rgba(0,0,0,.18);padding:18px max(16px,env(safe-area-inset-left,0px)) calc(18px + env(safe-area-inset-bottom,0px));max-width:640px;margin:0 auto}
+.sheet-b h3{font-size:18px;margin-bottom:4px}
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.opts button{border:1.5px solid #D9D3D0;background:#fff;border-radius:999px;padding:10px 16px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;min-height:44px;display:inline-flex;align-items:center;gap:8px;color:var(--ink)}
+.opts button[aria-pressed=true]{border-color:var(--ink);box-shadow:0 0 0 2px var(--ink) inset}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:55}
+.report{white-space:pre-wrap;background:var(--cream);border-radius:14px;padding:14px;font-size:14px;line-height:1.6;border:1px solid var(--line)}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;font-weight:600;z-index:80}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.back{border:0;background:none;font:inherit;font-weight:700;color:var(--green);cursor:pointer;padding:8px 0;min-height:44px}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="thu-vien.html"><img src="images/logo.png" alt="English Tree Method" width="88" height="42"><span>Checklist điện tử<small>Read Me – Hands Time</small></span></a>
+    <nav class="nav"><a class="btn btn-line btn-sm" href="thu-vien.html" style="color:var(--ink)">Thư viện</a></nav>
+  </div>
+</header>
+
+<main class="wrap app">
+  <div id="gate" class="card empty" hidden>
+    <h1 style="font-size:24px;font-weight:800">Checklist điện tử</h1>
+    <p class="muted" id="gateMsg">Đăng nhập Thư viện bằng email đã mua bộ có Phonics Checklist để dùng tính năng này.</p>
+    <a class="btn btn-red" href="thu-vien.html">Mở Thư viện</a>
+  </div>
+
+  <section id="vClass" hidden>
+    <div class="bar">
+      <div><span class="eyebrow">Lớp của tôi</span><h1 id="clsName">Lớp của tôi</h1></div>
+      <div class="row"><button class="btn btn-line btn-sm" id="btnRename" type="button">Đổi tên lớp</button><button class="btn btn-line btn-sm" id="btnBackup" type="button">Sao lưu</button><label class="btn btn-line btn-sm" style="cursor:pointer">Khôi phục<input type="file" id="fileRestore" accept="application/json" hidden></label></div>
+    </div>
+    <div class="card" style="margin-bottom:14px">
+      <form id="fAdd" class="addrow">
+        <label>Tên trẻ<input name="name" id="kidName" required maxlength="40" placeholder="Ví dụ: Bé An"></label>
+        <label>Năm sinh<input name="year" id="kidYear" inputmode="numeric" maxlength="4" placeholder="2021"></label>
+        <button class="btn btn-red" type="submit">Thêm trẻ</button>
+      </form>
+      <p class="muted" style="font-size:13px;margin-top:10px">Dữ liệu của trẻ chỉ lưu trên máy này, không gửi về máy chủ. Hãy bấm <b>Sao lưu</b> định kỳ để giữ bản dự phòng.</p>
+    </div>
+    <div id="kids" class="kids"></div>
+    <div id="noKids" class="card empty" hidden>
+      <b style="font-size:18px">Lớp chưa có trẻ nào</b>
+      <p class="muted">Thêm tên từng trẻ ở ô phía trên. Mỗi trẻ có một bản đồ 31 block riêng, đúng như cuốn Checklist in.</p>
+    </div>
+  </section>
+
+  <section id="vKid" hidden>
+    <button class="back" type="button" id="btnBack">← Cả lớp</button>
+    <div class="bar">
+      <div><span class="eyebrow" id="kidYearLbl"></span><h1 id="kidTitle"></h1></div>
+      <div class="row"><button class="btn btn-green btn-sm" id="btnReport" type="button">Báo cáo cho phụ huynh</button><button class="btn btn-line btn-sm" id="btnDel" type="button">Xóa trẻ</button></div>
+    </div>
+    <div class="stats" id="stats"></div>
+    <div class="card">
+      <b>Bản đồ block</b>
+      <div class="legend">
+        <span><i class="sw s0"></i>Chưa bắt đầu</span><span><i class="sw s1"></i>Đã giới thiệu</span><span><i class="sw s2"></i>Đang lặp lại</span><span><i class="sw s3"></i>Thành thạo</span><span><i class="sw s4"></i>Cần ôn lại</span>
+        <span>Viền đỏ: bài mới · viền xanh: âm mới · viền nét đứt: ôn tập</span>
+      </div>
+      <div class="gridwrap"><table class="road" id="road" aria-label="Bản đồ 31 block"></table></div>
+      <div class="glist" id="glist"></div>
+    </div>
+  </section>
+</main>
+
+<div class="scrim" id="scrim" hidden></div>
+<div class="sheet-b" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="shT">
+  <h3 id="shT"></h3><p class="muted" id="shS" style="font-size:14px"></p>
+  <div class="opts" id="shOpts"></div>
+  <label>Ghi chú của cô<textarea id="shNote" rows="2" maxlength="300" placeholder="Ví dụ: còn nhầm âm /b/ và /d/"></textarea></label>
+  <div class="row" style="margin-top:12px"><button class="btn btn-red" type="button" id="shSave">Lưu</button><button class="btn btn-line" type="button" id="shClose">Đóng</button></div>
+</div>
+<div class="sheet-b" id="repSheet" hidden role="dialog" aria-modal="true" aria-labelledby="repT">
+  <h3 id="repT">Báo cáo cho phụ huynh</h3>
+  <p class="muted" style="font-size:14px;margin-bottom:10px">Sao chép rồi gửi qua Zalo hoặc tin nhắn.</p>
+  <div class="report" id="repText"></div>
+  <div class="row" style="margin-top:12px"><button class="btn btn-green" type="button" id="repCopy">Sao chép</button><button class="btn btn-line" type="button" id="repShare" hidden>Chia sẻ</button><button class="btn btn-line" type="button" id="repClose">Đóng</button></div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function () {
+  'use strict';
+  var T = window.TT || {};
+  var $ = function (s) { return document.querySelector(s); };
+  // ---- Lộ trình 31 block (theo trang "Block roadmap & expected durations" của Phonics Checklist) ----
+  var GROUPS = [['G1', 'm · a · p'], ['G2', 'd · o · g'], ['G3', 'w · e · b · s'], ['G4', 'h · i · n · t'], ['G5', 'c · l · u · f'], ['G6', 'k · x · j · y'], ['G7', 'r · v · z · q'], ['G8', 'ai · ea · ch · ng'], ['G8+', 'Mở rộng']];
+  var ROWS = [['Hàng 1', 'Bài 01–02'], ['Hàng 2', 'Bài 03–06'], ['Hàng 3', 'Bài 07–09'], ['Hàng 4', 'Bài 10–13'], ['Hàng 5', 'Bài 14–19'], ['Hàng 6', 'Bài 20–23'], ['Hàng 7', 'Bài 24–26'], ['Hàng 8', 'Bài 27–31'], ['Mở rộng', 'Bài 32–35']];
+  // [mã, hàng (0-8), cột nhóm (0-8), số tuần dự kiến]
+  var W = { '1.1': 10, '2.1': 3, '3.1': 3, '4.1': 3, '5.1': 3, '6.1': 3, '7.1': 3, '8.1': 3,
+    '2.2': 6, '3.2': 1.5, '4.2': 1, '5.2': 1, '6.2': 1, '7.2': 1, '8.2': 1,
+    '3.3': 6, '4.3': 1.5, '5.3': 1, '6.3': 1, '7.3': 1,
+    '4.4': 6, '5.4': 2, '6.4': 1, '7.4': 1,
+    '5.5': 8, '6.5': 1.5, '7.5': 1, '6.6': 7, '7.7': 5, '8.8': 8, '8+': 20 };
+  var BLOCKS = Object.keys(W).map(function (k) {
+    if (k === '8+') return { id: 'B8+', row: 8, col: 8, w: 20, type: 'ext' };
+    var g = +k.split('.')[0], r = +k.split('.')[1];
+    var type = g === r ? 'new' : r === 1 ? 'snd' : 'rev';
+    return { id: 'B' + k, row: r - 1, col: g - 1, w: W[k], type: type };
+  });
+  var TOTAL = BLOCKS.reduce(function (s, b) { return s + b.w; }, 0);   // 114.5 tuần
+  var TYPE = { new: 'Bài mới', snd: 'Âm mới', rev: 'Ôn tập', ext: 'Mở rộng' };
+  var ST = ['Chưa bắt đầu', 'Đã giới thiệu', 'Đang lặp lại', 'Thành thạo', 'Cần ôn lại'];
+
+  // ---- Lưu trữ trên máy ----
+  var KEY = 'etm_checklist_v1';
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || null; } catch (e) { return null; } }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(D)); } catch (e) { toast('Không lưu được trên máy này'); } }
+  var D = load() || { cls: 'Lớp của tôi', kids: [] };
+  var cur = null, curBlock = null;
+
+  function toast(m) { var t = $('#toast'); t.textContent = m; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(function () { t.hidden = true; }, 2200); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function today() { return new Date().toISOString().slice(0, 10); }
+  function vnDate(iso) { return iso ? iso.split('-').reverse().join('/') : ''; }
+
+  function summary(k) {
+    var done = 0, weeks = 0, active = [], review = 0;
+    BLOCKS.forEach(function (b) { var s = (k.p[b.id] || {}).s || 0; if (s === 3) { done++; weeks += b.w; } if (s === 1 || s === 2) active.push(b); if (s === 4) review++; });
+    active.sort(function (x, y) { return x.col - y.col || x.row - y.row; });
+    var grp = active.length ? GROUPS[active[0].col] : null;
+    if (!grp) { var last = -1; BLOCKS.forEach(function (b) { if (((k.p[b.id] || {}).s || 0) === 3) last = Math.max(last, b.col); }); grp = GROUPS[Math.min(8, last + (last >= 0 ? 0 : 1))] || GROUPS[0]; }
+    return { done: done, weeks: weeks, pct: Math.round(weeks / TOTAL * 100), active: active, review: review, grp: grp };
+  }
+
+  // ---- Màn hình lớp ----
+  function renderClass() {
+    $('#clsName').textContent = D.cls;
+    var box = $('#kids'); box.innerHTML = '';
+    $('#noKids').hidden = D.kids.length > 0;
+    D.kids.forEach(function (k, i) {
+      var s = summary(k);
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'kid';
+      b.innerHTML = '<div class="top"><b>' + esc(k.name) + '</b><small>' + (k.year ? 'Sinh ' + esc(k.year) : '') + '</small></div>' +
+        '<div class="meter"><i style="width:' + s.pct + '%"></i></div>' +
+        '<div class="top"><small>' + s.done + '/31 block · ' + s.pct + '% lộ trình</small><span class="chip">Nhóm ' + esc(s.grp[1]) + '</span></div>' +
+        (s.review ? '<small style="color:var(--red)">' + s.review + ' block cần ôn lại</small>' : '');
+      b.addEventListener('click', function () { openKid(i); });
+      box.appendChild(b);
+    });
+  }
+  $('#fAdd').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var n = $('#kidName').value.trim(), y = $('#kidYear').value.replace(/\D/g, '').slice(0, 4);
+    if (!n) return;
+    D.kids.push({ id: Date.now().toString(36), name: n, year: y, p: {} }); save();
+    $('#kidName').value = ''; $('#kidYear').value = ''; renderClass(); toast('Đã thêm ' + n);
+  });
+  $('#btnRename').addEventListener('click', function () {
+    var f = $('#clsName'); f.contentEditable = 'true'; f.focus();
+    var done = function () { f.contentEditable = 'false'; D.cls = f.textContent.trim().slice(0, 40) || 'Lớp của tôi'; save(); renderClass(); f.removeEventListener('blur', done); };
+    f.addEventListener('blur', done);
+    f.addEventListener('keydown', function (ev) { if (ev.key === 'Enter') { ev.preventDefault(); f.blur(); } });
+    toast('Gõ tên lớp rồi nhấn Enter');
+  });
+  $('#btnBackup').addEventListener('click', function () {
+    var blob = new Blob([JSON.stringify(D, null, 1)], { type: 'application/json' });
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'checklist-' + today() + '.json';
+    document.body.appendChild(a); a.click(); a.remove(); toast('Đã tạo file sao lưu');
+  });
+  $('#fileRestore').addEventListener('change', function (e) {
+    var f = e.target.files[0]; if (!f) return;
+    var r = new FileReader();
+    r.onload = function () { try { var o = JSON.parse(r.result); if (!o || !Array.isArray(o.kids)) throw 0; D = o; save(); renderClass(); toast('Đã khôi phục ' + o.kids.length + ' trẻ'); } catch (x) { toast('File sao lưu không hợp lệ'); } };
+    r.readAsText(f); e.target.value = '';
+  });
+
+  // ---- Màn hình từng trẻ ----
+  function openKid(i) { cur = i; $('#vClass').hidden = true; $('#vKid').hidden = false; renderKid(); scrollTo(0, 0); }
+  $('#btnBack').addEventListener('click', function () { cur = null; $('#vKid').hidden = true; $('#vClass').hidden = false; renderClass(); });
+  $('#btnDel').addEventListener('click', function () {
+    var b = $('#btnDel');
+    if (b.dataset.armed) { D.kids.splice(cur, 1); save(); $('#btnBack').click(); toast('Đã xóa'); return; }
+    b.dataset.armed = '1'; b.textContent = 'Bấm lần nữa để xóa'; b.className = 'btn btn-red btn-sm';
+    setTimeout(function () { delete b.dataset.armed; b.textContent = 'Xóa trẻ'; b.className = 'btn btn-line btn-sm'; }, 3000);
+  });
+  function renderKid() {
+    var k = D.kids[cur], s = summary(k);
+    $('#kidTitle').textContent = k.name; $('#kidYearLbl').textContent = k.year ? 'Sinh năm ' + k.year : 'Hồ sơ của trẻ';
+    $('#stats').innerHTML = '<div class="stat"><b>' + s.done + '/31</b><span>block thành thạo</span></div>' +
+      '<div class="stat"><b>' + s.pct + '%</b><span>lộ trình (' + String(s.weeks).replace('.', ',') + '/114,5 tuần)</span></div>' +
+      '<div class="stat"><b>' + esc(s.grp[0]) + '</b><span>nhóm ' + esc(s.grp[1]) + '</span></div>' +
+      '<div class="stat"><b>' + s.review + '</b><span>block cần ôn lại</span></div>';
+    var h = '<thead><tr><th></th>' + GROUPS.map(function (g) { return '<th class="g"><b>' + g[0] + '</b>' + g[1] + '</th>'; }).join('') + '</tr></thead><tbody>';
+    for (var r = 8; r >= 0; r--) {
+      h += '<tr><th class="r">' + ROWS[r][0] + '<br>' + ROWS[r][1] + '</th>';
+      for (var c = 0; c < 9; c++) {
+        var b = BLOCKS.filter(function (x) { return x.row === r && x.col === c; })[0];
+        if (!b) { h += '<td></td>'; continue; }
+        var st = (k.p[b.id] || {}).s || 0;
+        h += '<td><button type="button" class="cell s' + st + ' t-' + b.type + '" data-b="' + b.id + '" aria-label="' + b.id + ' ' + TYPE[b.type] + ', ' + ST[st] + '">' + b.id + '<small>' + String(b.w).replace('.', ',') + ' tuần</small></button></td>';
+      }
+      h += '</tr>';
+    }
+    $('#road').innerHTML = h + '</tbody>';
+    // Dạng danh sách theo nhóm cho điện thoại
+    var gl = '';
+    GROUPS.forEach(function (g, c) {
+      var bs = BLOCKS.filter(function (x) { return x.col === c; }).sort(function (a, b2) { return a.row - b2.row; });
+      var wk = bs.reduce(function (t, x) { return t + x.w; }, 0);
+      gl += '<div class="gcard"><h4>' + g[0] + ' · ' + g[1] + '<span>' + String(wk).replace('.', ',') + ' tuần</span></h4><div class="blks">' +
+        bs.map(function (b) { var st = (k.p[b.id] || {}).s || 0; return '<button type="button" class="blk s' + st + ' t-' + b.type + '" data-b="' + b.id + '" aria-label="' + b.id + ' ' + TYPE[b.type] + ', ' + ST[st] + '">' + b.id + '<small>' + TYPE[b.type] + ' · ' + ST[st] + '</small></button>'; }).join('') + '</div></div>';
+    });
+    $('#glist').innerHTML = gl;
+    Array.prototype.forEach.call(document.querySelectorAll('#road .cell, #glist .blk'), function (el) { el.addEventListener('click', function () { openBlock(el.getAttribute('data-b')); }); });
+  }
+  function openBlock(id) {
+    var k = D.kids[cur], b = BLOCKS.filter(function (x) { return x.id === id; })[0], p = k.p[id] || {};
+    curBlock = id;
+    $('#shT').textContent = id + ' · ' + TYPE[b.type] + ' · nhóm ' + GROUPS[b.col][1];
+    $('#shS').textContent = 'Dự kiến khoảng ' + String(b.w).replace('.', ',') + ' tuần.' + (p.d1 ? ' Bắt đầu ' + vnDate(p.d1) + '.' : '') + (p.d3 ? ' Thành thạo ' + vnDate(p.d3) + '.' : '');
+    $('#shOpts').innerHTML = ST.map(function (t, i) { return '<button type="button" data-s="' + i + '" aria-pressed="' + ((p.s || 0) === i) + '"><i class="sw s' + i + '"></i>' + t + '</button>'; }).join('');
+    Array.prototype.forEach.call(document.querySelectorAll('#shOpts button'), function (x) { x.addEventListener('click', function () { Array.prototype.forEach.call(document.querySelectorAll('#shOpts button'), function (y) { y.setAttribute('aria-pressed', y === x ? 'true' : 'false'); }); }); });
+    $('#shNote').value = p.n || '';
+    $('#scrim').hidden = false; $('#sheet').hidden = false;
+  }
+  function closeSheets() { $('#scrim').hidden = true; $('#sheet').hidden = true; $('#repSheet').hidden = true; }
+  $('#shClose').addEventListener('click', closeSheets); $('#scrim').addEventListener('click', closeSheets); $('#repClose').addEventListener('click', closeSheets);
+  $('#shSave').addEventListener('click', function () {
+    var k = D.kids[cur], p = k.p[curBlock] || {}, sel = document.querySelector('#shOpts [aria-pressed=true]');
+    var s = sel ? +sel.getAttribute('data-s') : 0;
+    if (s > 0 && !p.d1) p.d1 = today();
+    if (s === 3) p.d3 = p.d3 || today(); else delete p.d3;
+    p.s = s; p.n = $('#shNote').value.trim().slice(0, 300);
+    if (!s && !p.n) delete k.p[curBlock]; else k.p[curBlock] = p;
+    save(); closeSheets(); renderKid(); toast('Đã lưu ' + curBlock);
+  });
+  // ---- Báo cáo phụ huynh ----
+  $('#btnReport').addEventListener('click', function () {
+    var k = D.kids[cur], s = summary(k);
+    var mastered = BLOCKS.filter(function (b) { return ((k.p[b.id] || {}).s || 0) === 3; }).map(function (b) { return b.id; });
+    var notes = BLOCKS.filter(function (b) { return (k.p[b.id] || {}).n; }).map(function (b) { return '• ' + b.id + ': ' + k.p[b.id].n; });
+    var txt = 'Báo cáo hành trình đọc tiếng Anh của ' + k.name + ' (' + vnDate(today()) + ')\n\n' +
+      '• Đã thành thạo ' + s.done + '/31 block, tương đương ' + s.pct + '% lộ trình Montessori Phonics.\n' +
+      '• Con đang học nhóm âm ' + s.grp[1] + (s.active.length ? ' (' + s.active.map(function (b) { return b.id; }).join(', ') + ')' : '') + '.\n' +
+      (s.review ? '• Có ' + s.review + ' block cô sẽ cho con ôn lại.\n' : '') +
+      (mastered.length ? '• Các block đã thành thạo: ' + mastered.join(', ') + '.\n' : '') +
+      (notes.length ? '\nGhi chú của cô:\n' + notes.join('\n') + '\n' : '') +
+      '\nỞ nhà, ba mẹ có thể chơi "I Spy" với các âm con đã học: nói âm, con tìm đồ vật bắt đầu bằng âm đó.\n— ' + D.cls;
+    $('#repText').textContent = txt;
+    $('#repShare').hidden = !navigator.share;
+    $('#scrim').hidden = false; $('#repSheet').hidden = false;
+  });
+  $('#repCopy').addEventListener('click', function () {
+    var t = $('#repText').textContent;
+    (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () { toast('Đã sao chép'); }, function () {
+      var r = document.createRange(); r.selectNodeContents($('#repText')); var sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); toast('Đã chọn chữ, nhấn giữ để sao chép');
+    });
+  });
+  $('#repShare').addEventListener('click', function () { navigator.share({ text: $('#repText').textContent }).catch(function () {}); });
+
+  // ---- Kiểm tra quyền dùng: phải sở hữu Phonics Checklist ----
+  function gate(msg) { $('#gate').hidden = false; if (msg) $('#gateMsg').textContent = msg; }
+  function start() { $('#vClass').hidden = false; renderClass(); }
+  var tok = null, ok = null;
+  try { tok = localStorage.getItem('etm_tok'); ok = JSON.parse(localStorage.getItem('etm_cl_ok') || 'null'); } catch (e) {}
+  var fresh = ok && Date.now() - ok.t < 7 * 864e5;            // dùng offline tối đa 7 ngày sau lần xác minh gần nhất
+  if (!T.API) { start(); return; }
+  if (!tok) { if (fresh) start(); else gate(); return; }
+  fetch(T.API, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'me', s: tok }) })
+    .then(function (r) { return r.json(); }).then(function (d) {
+      var has = d.ok && d.items.some(function (i) { return i.key === 'CL'; });
+      if (has) { try { localStorage.setItem('etm_cl_ok', JSON.stringify({ t: Date.now() })); } catch (e) {} start(); }
+      else if (d.ok) gate('Tài khoản của bạn chưa có Phonics Checklist. Checklist điện tử đi kèm Combo 3, Trọn bộ và Gói Chuyển giao.');
+      else if (fresh) start(); else gate('Phiên đăng nhập đã hết hạn. Mở Thư viện để đăng nhập lại.');
+    }).catch(function () { if (fresh) start(); else gate('Không có mạng. Lần đầu dùng cần kết nối để xác minh tài khoản.'); });
+})();
+</script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});</script>
+</body>
+</html>

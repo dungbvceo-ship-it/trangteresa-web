@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Thư viện của tôi | Trang Teresa</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#C40102">
+<link rel="icon" href="images/logo.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="style.css">
+<script src="config.js"></script>
+<style>
+body{background:var(--cream)}
+.lib{padding-top:32px;padding-bottom:64px}
+.hello{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:14px;margin-bottom:20px}
+.hello h1{font-size:clamp(26px,3.4vw,36px);font-weight:800}
+.lic{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:14px}
+.lic b{font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:.04em}
+.grid{display:grid;grid-template-columns:290px minmax(0,1fr);gap:22px;align-items:start}
+.list{display:flex;flex-direction:column;gap:10px;position:sticky;top:88px}
+.item{display:flex;flex-direction:column;gap:3px;text-align:left;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;cursor:pointer;font:inherit;color:inherit;min-height:44px;transition:border-color .2s,box-shadow .2s}
+.item:hover{border-color:#CFC7C3}
+.item[aria-selected=true]{border:2px solid var(--red);box-shadow:var(--shadow-s)}
+.item b{font-size:15px;line-height:1.35}
+.item span{font-size:13px;color:var(--muted)}
+.viewer{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-s);min-width:0}
+.vhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.vhead h2{font-size:17px;font-weight:800;min-width:0}
+.tools{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ib{min-width:44px;min-height:44px;border-radius:12px;border:1px solid var(--line);background:#fff;font:inherit;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:var(--ink)}
+.ib:hover{border-color:var(--ink)}.ib[disabled]{opacity:.4;cursor:default}
+.pg{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--muted)}
+.pg input{width:64px;min-height:44px;border:1px solid var(--line);border-radius:12px;text-align:center;font:inherit;font-weight:700}
+.stage{position:relative;background:#EFEAE7;min-height:60vh;display:flex;justify-content:center;align-items:flex-start;overflow:auto;padding:16px;touch-action:pan-y pinch-zoom;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.stage canvas{display:block;background:#fff;box-shadow:0 8px 30px rgba(0,0,0,.12);max-width:none}
+.stage .msg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;color:var(--muted);font-weight:600}
+.files{padding:18px 16px;display:flex;flex-direction:column;gap:10px}
+.file{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.file span{font-size:13px;color:var(--muted)}
+.note{font-size:13px;color:var(--muted);padding:10px 16px;border-top:1px solid var(--line)}
+.state{max-width:520px;margin:48px auto;background:#fff;border:1px solid var(--line);border-radius:24px;padding:30px;display:flex;flex-direction:column;gap:14px}
+.state h1{font-size:26px;font-weight:800}
+.state form{display:flex;flex-direction:column;gap:12px}
+.box{margin-top:18px;border-radius:18px;padding:18px 20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.box.gift{background:var(--green-50);border:1px solid #CFE6D5}
+.box.clbox{background:#fff;border:2px solid var(--green)}
+.box.up{background:linear-gradient(135deg,#FFF4F2,#fff);border:1px dashed #F0A9A6}
+.otp{font-size:26px;letter-spacing:.4em;text-align:center;font-weight:800}
+@media (max-width:900px){.grid{grid-template-columns:1fr}.list{position:static;flex-direction:row;overflow-x:auto;padding-bottom:4px}.item{min-width:220px}.stage{padding:8px;min-height:50vh}}
+@media print{body *{display:none!important}body::after{content:"Tài liệu được bảo vệ bản quyền.";display:block!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="images/logo.png" alt="English Tree Method" width="88" height="42"><span>Trang Teresa<small>Thư viện của tôi</small></span></a>
+    <nav class="nav"><a href="index.html#bang-gia">Bảng giá</a><button class="btn btn-line btn-sm" id="logout" type="button" hidden style="color:var(--ink)">Đăng xuất</button></nav>
+  </div>
+</header>
+
+<main class="wrap lib">
+  <div id="loading" class="state" style="text-align:center"><div class="waiting" style="justify-content:center"><span class="dot"></span>Đang mở thư viện…</div></div>
+
+  <div id="login" class="state" hidden>
+    <h1>Thư viện của tôi</h1>
+    <p class="muted">Bấm nút <b>Mở thư viện</b> trong email xác nhận đơn hàng, hoặc nhận mã đăng nhập bằng email đã dùng khi mua.</p>
+    <form id="f1">
+      <label>Email đã mua<input name="email" type="email" required autocomplete="email" placeholder="ten@gmail.com"></label>
+      <button class="btn btn-red" type="submit">Gửi mã đăng nhập</button>
+    </form>
+    <form id="f2" hidden>
+      <label>Mã 6 số trong email<input class="otp" name="otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="\d{6}" required></label>
+      <button class="btn btn-red" type="submit">Mở thư viện</button>
+      <button class="btn btn-line btn-sm" type="button" id="back">Đổi email</button>
+    </form>
+    <p class="muted" id="lMsg" role="status" style="font-size:14px"></p>
+  </div>
+
+  <div id="error" class="state" hidden>
+    <h1 style="font-size:24px">Chưa mở được thư viện</h1>
+    <p class="muted" id="errMsg"></p>
+    <a class="btn btn-line" href="thu-vien.html">Đăng nhập bằng mã email</a>
+  </div>
+
+  <section id="app" hidden>
+    <div class="hello">
+      <div><span class="eyebrow">Thư viện của tôi</span><h1 id="hi"></h1></div>
+      <span class="lic">Mã bản quyền <b id="lic"></b></span>
+    </div>
+    <div class="grid">
+      <div class="list" role="tablist" aria-label="Tài liệu của tôi" id="list"></div>
+      <div class="viewer">
+        <div class="vhead"><h2 id="vt"></h2><div class="tools" id="tools">
+          <button class="ib" id="prev" type="button" aria-label="Trang trước">‹</button>
+          <span class="pg"><input id="pno" type="number" min="1" aria-label="Số trang"> / <b id="ptot"></b></span>
+          <button class="ib" id="next" type="button" aria-label="Trang sau">›</button>
+          <button class="ib" id="zo" type="button" aria-label="Thu nhỏ">−</button>
+          <button class="ib" id="zi" type="button" aria-label="Phóng to">+</button>
+        </div></div>
+        <div class="stage" id="stage"><canvas id="cv"></canvas><div class="msg" id="smsg" hidden></div></div>
+        <div class="files" id="files" hidden></div>
+        <p class="note" id="vnote"></p>
+      </div>
+    </div>
+    <div class="box clbox" id="clBox" hidden><div><b>Checklist điện tử cho lớp của bạn</b><div class="muted" style="font-size:14px">Theo dõi 31 block của từng trẻ, xuất báo cáo gửi phụ huynh. Dữ liệu lưu trên máy của bạn.</div></div><a class="btn btn-green btn-sm" href="checklist.html">Mở Checklist điện tử</a></div>
+    <div class="box gift" id="gift" hidden><div><b>Quà tặng của bạn</b><div class="muted" style="font-size:14px" id="giftT"></div></div><span id="giftC" style="font-weight:700"></span></div>
+    <div class="box up" id="up" hidden><div><b id="upT"></b><div class="muted" style="font-size:14px">Hệ thống tự trừ số tiền bạn đã trả, chỉ thanh toán phần chênh.</div></div><a class="btn btn-red btn-sm" id="upA" href="index.html#bang-gia">Xem ưu đãi</a></div>
+  </section>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var T = window.TT || {}, q = new URLSearchParams(location.search);
+  var $ = function (s) { return document.querySelector(s); };
+  var store = { get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }, del: function (k) { try { localStorage.removeItem(k); } catch (e) {} } };
+  function show(id) { ['loading', 'login', 'error', 'app'].forEach(function (x) { $('#' + x).hidden = x !== id; }); $('#logout').hidden = id !== 'app'; }
+  function fail(m) { $('#errMsg').textContent = m; show('error'); }
+  function api(d) {
+    return fetch(T.API, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(d) }).then(function (r) { return r.json(); });
+  }
+  // Mã thiết bị ngẫu nhiên, lưu trên trình duyệt này
+  var dev = store.get('etm_dev');
+  if (!dev) { var a = new Uint8Array(16); crypto.getRandomValues(a); dev = Array.prototype.map.call(a, function (b) { return ('0' + b.toString(16)).slice(-2); }).join(''); store.set('etm_dev', dev); }
+  var label = (function () { var u = navigator.userAgent; var os = /iPhone|iPad/.test(u) ? (/iPad/.test(u) ? 'iPad' : 'iPhone') : /Android/.test(u) ? 'Android' : /Mac/.test(u) ? 'Mac' : /Windows/.test(u) ? 'Windows' : 'Máy tính';
+    var br = /Edg\//.test(u) ? 'Edge' : /Chrome\//.test(u) ? 'Chrome' : /Safari\//.test(u) ? 'Safari' : /Firefox\//.test(u) ? 'Firefox' : 'Trình duyệt'; return os + ' · ' + br; })();
+
+  // Chặn thao tác sao chép thông thường
+  document.addEventListener('contextmenu', function (e) { if (e.target.closest('#stage')) e.preventDefault(); });
+  document.addEventListener('keydown', function (e) { if ((e.ctrlKey || e.metaKey) && /^(p|s)$/i.test(e.key)) e.preventDefault(); });
+  document.addEventListener('dragstart', function (e) { if (e.target.closest('#stage')) e.preventDefault(); });
+
+  var tok = store.get('etm_tok'), D = null, cur = null, page = 1, zoom = 1, imgs = {}, wmText = '';
+
+  if (!T.API) { fail('Hệ thống đang được cập nhật, vui lòng quay lại sau ít phút.'); return; }
+  var c = q.get('c'), t = q.get('t');
+  if (c && t) {
+    history.replaceState(null, '', location.pathname);
+    api({ action: 'login', c: c, t: t, device: dev, label: label }).then(onLogin).catch(net);
+  } else if (tok) {
+    api({ action: 'me', s: tok }).then(function (d) { if (d.ok) { d.token = tok; onLogin(d); } else { store.del('etm_tok'); show('login'); } }).catch(net);
+  } else show('login');
+
+  function net() { fail('Không kết nối được máy chủ, vui lòng tải lại trang.'); }
+
+  $('#f1').addEventListener('submit', function (e) {
+    e.preventDefault(); var em = e.target.email.value.trim().toLowerCase();
+    $('#lMsg').textContent = 'Đang gửi…';
+    api({ action: 'otp', email: em }).then(function (o) { $('#lMsg').textContent = o.message; $('#f1').hidden = true; $('#f2').hidden = false; $('#f2').otp.focus(); }).catch(net);
+  });
+  $('#back').addEventListener('click', function () { $('#f2').hidden = true; $('#f1').hidden = false; $('#lMsg').textContent = ''; });
+  $('#f2').addEventListener('submit', function (e) {
+    e.preventDefault(); $('#lMsg').textContent = 'Đang kiểm tra…';
+    api({ action: 'login', email: $('#f1').email.value.trim().toLowerCase(), otp: e.target.otp.value.trim(), device: dev, label: label })
+      .then(function (d) { if (!d.ok) { $('#lMsg').textContent = d.error; return; } onLogin(d); }).catch(net);
+  });
+  $('#logout').addEventListener('click', function () { api({ action: 'logout', s: tok }).catch(function () {}); store.del('etm_tok'); location.href = 'thu-vien.html'; });
+
+  function onLogin(d) {
+    if (!d.ok) return fail(d.error || 'Liên kết không hợp lệ.');
+    D = d; tok = d.token; store.set('etm_tok', tok);
+    $('#hi').textContent = 'Chào ' + (d.name || 'bạn') + ',';
+    $('#lic').textContent = d.license;
+    wmText = (d.name || '') + ' · ' + d.license + ' · ' + d.email;
+    var list = $('#list'); list.innerHTML = '';
+    if (!d.items.length) return fail('Tài liệu đang được chuẩn bị. Chúng tôi sẽ gửi email khi sẵn sàng.');
+    d.items.forEach(function (it, i) {
+      var b = document.createElement('button');
+      b.className = 'item'; b.type = 'button'; b.setAttribute('role', 'tab'); b.innerHTML = '<b></b><span></span>';
+      b.querySelector('b').textContent = it.title;
+      b.querySelector('span').textContent = 'Phiên bản ' + it.version + (it.updated ? ' · ' + it.updated : '') +
+        (it.mode === 'reader' ? ' · ' + it.pages + ' trang · đọc trực tuyến' : it.mode === 'download' ? ' · tải & in' : ' · đang chuẩn bị');
+      b.addEventListener('click', function () { select(i); });
+      list.appendChild(b);
+    });
+    if (d.items.some(function (x) { return x.key === 'CL'; })) $('#clBox').hidden = false;
+    if (d.bonus) { $('#gift').hidden = false; $('#giftT').textContent = d.bonus + '. ' + (d.support.name || '') + ' sẽ liên hệ đặt lịch với bạn.'; $('#giftC').textContent = 'Hotline/Zalo ' + d.support.hotline; }
+    if (d.upgrade) { $('#up').hidden = false; $('#upT').textContent = d.upgrade.label; if (d.upgrade.pkg === 'CG') { $('#upA').href = 'index.html#chuyen-giao'; $('#upA').textContent = 'Xem Gói Chuyển giao'; $('#up .muted').textContent = 'Đã mua Trọn bộ: 1.999.000đ được trừ vào học phí chuyển giao.'; } }
+    show('app');
+    select(0);
+  }
+
+  function select(i) {
+    cur = D.items[i]; imgs = {};
+    Array.prototype.forEach.call($('#list').children, function (x, j) { x.setAttribute('aria-selected', j === i ? 'true' : 'false'); });
+    $('#vt').textContent = cur.title;
+    var rd = cur.mode === 'reader';
+    $('#tools').hidden = !rd; $('#stage').hidden = !rd; $('#files').hidden = cur.mode !== 'download';
+    $('#vnote').textContent = (cur.note ? 'Cập nhật mới: ' + cur.note + ' · ' : '') + (rd
+      ? 'Đọc trực tuyến trên tối đa ' + D.maxDevices + ' thiết bị của bạn. Mỗi trang mang tên và mã bản quyền của bạn – vui lòng không chụp, chia sẻ.'
+      : cur.mode === 'download' ? 'Tài liệu này được tải và in để dùng trong lớp của bạn.' : 'Tài liệu đang được chuẩn bị, bạn sẽ nhận email khi sẵn sàng.');
+    if (rd) { $('#ptot').textContent = cur.pages; $('#pno').max = cur.pages; go(Number(store.get('etm_p_' + cur.key)) || 1); }
+    else if (cur.mode === 'download') renderFiles();
+  }
+
+  function renderFiles() {
+    var box = $('#files'); box.innerHTML = '';
+    (cur.files || []).forEach(function (f) {
+      var row = document.createElement('div'); row.className = 'file';
+      row.innerHTML = '<div><b></b><br><span></span></div><button class="btn btn-green btn-sm" type="button">Tải về</button>';
+      row.querySelector('b').textContent = f.name; row.querySelector('span').textContent = (f.size / 1048576).toFixed(1) + ' MB';
+      row.querySelector('button').addEventListener('click', function (e) { download(f, e.target); });
+      box.appendChild(row);
+    });
+    if (!box.children.length) box.textContent = 'Chưa có file.';
+  }
+  function download(f, btn) {
+    btn.disabled = true; btn.textContent = 'Đang tải…';
+    api({ action: 'dl', s: tok, key: cur.key, i: f.i }).then(function (o) {
+      if (!o.ok) { guard(o); btn.textContent = o.error; return; }
+      var bin = atob(o.data), u = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
+      var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([u], { type: o.mime })); a.download = o.name;
+      document.body.appendChild(a); a.click(); a.remove(); btn.textContent = 'Đã tải';
+    }).catch(function () { btn.textContent = 'Thử lại'; }).then(function () { btn.disabled = false; });
+  }
+
+  function guard(o) {
+    if (o.code === 'session' || o.code === 'other') { store.del('etm_tok'); fail(o.error + ' Mở lại bằng nút trong email hoặc nhận mã đăng nhập.'); return true; }
+    return false;
+  }
+  function fetchPage(n) {
+    if (imgs[n]) return imgs[n];
+    imgs[n] = api({ action: 'page', s: tok, key: cur.key, n: n }).then(function (o) {
+      if (!o.ok) { delete imgs[n]; throw o; }
+      return new Promise(function (res) { var im = new Image(); im.onload = function () { res(im); }; im.src = o.img; });
+    });
+    var keys = Object.keys(imgs); if (keys.length > 8) delete imgs[keys[0]];
+    return imgs[n];
+  }
+  function go(n) {
+    n = Math.max(1, Math.min(cur.pages, n)); page = n;
+    $('#pno').value = n; $('#prev').disabled = n === 1; $('#next').disabled = n === cur.pages;
+    store.set('etm_p_' + cur.key, n);
+    msg('Đang mở trang ' + n + '…');
+    var key = cur.key;
+    fetchPage(n).then(function (im) { if (cur.key === key && page === n) draw(im); })
+      .catch(function (o) { if (!guard(o)) msg(o.error || 'Không tải được trang, vui lòng thử lại.'); });
+    [n + 1, n + 2].forEach(function (k) { if (k <= cur.pages) fetchPage(k).catch(function () {}); });
+  }
+  function msg(m) { $('#smsg').hidden = !m; $('#smsg').textContent = m || ''; }
+  var lastImg = null;
+  function draw(im) {
+    lastImg = im; msg('');
+    var cv = $('#cv'), st = $('#stage'), dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = Math.min(st.clientWidth - 32, 980) * zoom, h = w * im.height / im.width;
+    cv.style.width = w + 'px'; cv.style.height = h + 'px'; cv.width = w * dpr; cv.height = h * dpr;
+    var g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    g.drawImage(im, 0, 0, w, h);
+    // watermark nằm TRONG ảnh vẽ ra: mọi ảnh chụp đều mang thông tin người mua
+    var stamp = wmText + ' · ' + new Date().toLocaleString('vi-VN');
+    g.save(); g.translate(w / 2, h / 2); g.rotate(-0.42);
+    g.font = '700 ' + Math.max(12, w / 46) + 'px "Be Vietnam Pro",system-ui,sans-serif';
+    g.fillStyle = 'rgba(196,1,2,.085)'; g.textAlign = 'center';
+    var step = Math.max(110, w / 4.2);
+    for (var y = -h; y < h; y += step) for (var x = -w; x < w; x += g.measureText(wmText).width + 80) g.fillText(wmText, x, y);
+    g.restore();
+    g.font = '600 ' + Math.max(10, w / 85) + 'px system-ui,sans-serif'; g.fillStyle = 'rgba(0,0,0,.45)'; g.textAlign = 'left';
+    g.fillText('Cấp phép cho ' + stamp, 12, h - 10);
+  }
+  $('#prev').addEventListener('click', function () { go(page - 1); });
+  $('#next').addEventListener('click', function () { go(page + 1); });
+  $('#pno').addEventListener('change', function (e) { go(Number(e.target.value) || 1); });
+  $('#zi').addEventListener('click', function () { zoom = Math.min(2.5, zoom + .25); if (lastImg) draw(lastImg); });
+  $('#zo').addEventListener('click', function () { zoom = Math.max(.5, zoom - .25); if (lastImg) draw(lastImg); });
+  document.addEventListener('keydown', function (e) { if (!cur || cur.mode !== 'reader' || e.target.tagName === 'INPUT') return; if (e.key === 'ArrowRight') go(page + 1); if (e.key === 'ArrowLeft') go(page - 1); });
+  var sx = null;
+  $('#stage').addEventListener('touchstart', function (e) { sx = e.touches.length === 1 ? e.touches[0].clientX : null; }, { passive: true });
+  $('#stage').addEventListener('touchend', function (e) { if (sx === null || zoom !== 1) return; var dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 60) go(page + (dx < 0 ? 1 : -1)); sx = null; });
+  window.addEventListener('resize', function () { if (lastImg) draw(lastImg); });
+  // Ẩn trang khi rời khỏi tab (hạn chế quay màn hình nền)
+  document.addEventListener('visibilitychange', function () {
+    if (!cur || cur.mode !== 'reader') return;
+    if (document.hidden) { var cv = $('#cv'); cv.getContext('2d').clearRect(0, 0, cv.width, cv.height); }
+    else if (lastImg) draw(lastImg);
+  });
+})();
+</script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});</script>
+</body>
+</html>
