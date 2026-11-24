@@ -393,9 +393,15 @@ body{background:var(--cream)}
   // ---------- Mục lục · tra cứu · đánh dấu ----------
   var hist = [], fit = 'width';
   function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-  function sectionOf(n) { var t = null; (cur.toc || []).forEach(function (x) { if (x.p <= n && (x.l || 1) === 1) t = x; }); return t ? t.t : ''; }
+  // mục đang đọc: mục lớn gần nhất (cấp 1–2) và mục con (cấp 3) nếu có, ví dụ "Chương 6 … › Nhóm 1 · m a p"
+  function sectionOf(n, full) {
+    var big = null, small = null;
+    (cur.toc || []).forEach(function (x) { if (x.p > n) return; if ((x.l || 1) <= 2) { big = x; small = null; } else small = x; });
+    if (!big) return '';
+    return full && small ? big.t + ' › ' + small.t : (small && !full ? small.t : big.t);
+  }
   function updateWhere() {
-    var sec = sectionOf(page);
+    var sec = sectionOf(page, true);
     $('#where').innerHTML = (sec ? '<b>' + esc(sec) + '</b> · ' : '') + 'trang ' + page + '/' + cur.pages + ' · ' + Math.round(page / cur.pages * 100) + '%';
     var cs = $('#p-toc').querySelectorAll('.tocl'), best = null;
     Array.prototype.forEach.call(cs, function (b) { b.classList.remove('cur'); if (Number(b.dataset.p) <= page) best = b; });
