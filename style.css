@@ -136,6 +136,7 @@ p{margin:0}
 .num{width:42px;height:42px;border-radius:50%;background:var(--red);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center}
 .steps strong{font-size:18px}
 .steps span{color:var(--muted)}
+.steps .num{color:#fff;font-size:18px;box-shadow:0 6px 16px rgba(196,1,2,.28)}
 @media (max-width:860px){.steps{grid-template-columns:1fr}}
 
 /* Gallery */
