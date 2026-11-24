@@ -6,7 +6,7 @@
     GC: { name: 'Bộ Giáo cụ · file in', price: 990000 },
     DUO: { name: 'Bộ đôi: Lý thuyết + Giáo cụ', price: 1399000 },
     COMBO3: { name: 'Combo 3: Lý thuyết + Checklist + Giáo cụ', price: 1499000 },
-    FULL: { name: 'Trọn bộ: Combo 3 + tư vấn 1:1 (2 giờ)', price: 1999000 }
+    FULL: { name: 'Trọn bộ: Combo 3 + đào tạo online (2 giờ)', price: 1999000 }
   };
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
@@ -163,8 +163,8 @@
     var ans = {};
     var REC = {
       COMBO3: ['Combo 3 – 1.499.000đ', 'Đủ Sách lý thuyết, Checklist từng trẻ và Bộ giáo cụ để bắt đầu ngay trong tuần. Chỉ hơn Bộ đôi 100.000đ nhưng có thêm Checklist trị giá 299.000đ.', 'COMBO3'],
-      FULL: ['Trọn bộ – 1.999.000đ', 'Combo 3 kèm 1 buổi tư vấn online 1:1 (2 giờ) để chuyên gia cùng xếp lộ trình, kệ giáo cụ cho lớp. Nếu sau đó trường đăng ký Chuyển giao, 1.999.000đ được trừ lại.', 'FULL'],
-      FEW: ['Trọn bộ cho trưởng nhóm, rồi Chuyển giao', 'Với 2–5 giáo viên, cách tiết kiệm là trưởng nhóm mua Trọn bộ để được tư vấn, sau đó trường đăng ký Chuyển giao – khoản đã trả được trừ vào học phí.', 'FULL'],
+      FULL: ['Trọn bộ – 1.999.000đ', 'Combo 3 kèm 1 buổi đào tạo online (2 giờ) cùng chuyên gia: cách dạy âm, xếp lộ trình và kệ giáo cụ cho lớp. Nếu sau đó trường đăng ký Chuyển giao, 1.999.000đ được trừ lại.', 'FULL'],
+      FEW: ['Trọn bộ cho trưởng nhóm, rồi Chuyển giao', 'Với 2–5 giáo viên, cách tiết kiệm là trưởng nhóm mua Trọn bộ để dự buổi đào tạo online, sau đó trường đăng ký Chuyển giao – khoản đã trả được trừ vào học phí.', 'FULL'],
       SCHOOL: ['Gói Chuyển giao nhà trường', '4 buổi đào tạo, slide chi tiết, giáo án Lesson Plan buổi sáng và buổi chiều, bản quyền cho mọi giáo viên – để mọi lớp dạy cùng một chuẩn.', 'LEAD']
     };
     var render = function () {
