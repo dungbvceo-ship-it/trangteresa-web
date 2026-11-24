@@ -297,7 +297,7 @@ body{background:var(--cream)}
     $('#tools').hidden = !rd; $('#rline').hidden = !rd; $('#keys').hidden = !rd; $('.rbody').hidden = !rd; $('#files').hidden = cur.mode !== 'download';
     hist = []; $('#jumpBack').hidden = true; $('#res').innerHTML = ''; $('#q').value = '';
     var dv = cur.mode === 'drive'; $('#dwrap').hidden = !dv; $('#dframe').src = dv ? cur.embed : 'about:blank';
-    if (dv) { var w = ''; for (var i = 0; i < 40; i++) w += '<span style="display:inline-block;margin:60px 80px;transform:rotate(-24deg);font-weight:700;color:rgba(196,1,2,.09);white-space:nowrap">' + wmText.replace(/</g, '') + '</span>'; $('#dwm').innerHTML = w; }
+    if (dv) { var w = ''; for (var i = 0; i < 12; i++) w += '<span style="display:inline-block;margin:120px 160px;transform:rotate(-24deg);font-weight:600;color:rgba(196,1,2,.06);white-space:nowrap">' + wmText.replace(/</g, '') + '</span>'; $('#dwm').innerHTML = w; }
     $('#vnote').textContent = (cur.note ? 'Cập nhật mới: ' + cur.note + ' · ' : '') + (rd
       ? 'Đọc trực tuyến trên tối đa ' + D.maxDevices + ' thiết bị của bạn. Mỗi trang mang tên và mã bản quyền của bạn – vui lòng không chụp, chia sẻ.'
       : cur.mode === 'download' ? 'Tài liệu này được tải và in để dùng trong lớp của bạn.' : cur.mode === 'drive' ? 'Khung đọc dùng Google Drive: hãy đăng nhập Google bằng đúng email đã mua. Trình đọc ETM Reader cho tài liệu này đang được chuẩn bị.' : 'Tài liệu đang được chuẩn bị, bạn sẽ nhận email khi sẵn sàng.');
@@ -376,10 +376,11 @@ body{background:var(--cream)}
     // watermark nằm TRONG ảnh vẽ ra: mọi ảnh chụp đều mang thông tin người mua
     var stamp = wmText + ' · ' + new Date().toLocaleString('vi-VN');
     g.save(); g.translate(w / 2, h / 2); g.rotate(-0.42);
-    g.font = '700 ' + Math.max(12, w / 46) + 'px "Be Vietnam Pro",system-ui,sans-serif';
-    g.fillStyle = 'rgba(196,1,2,.085)'; g.textAlign = 'center';
-    var step = Math.max(110, w / 4.2);
-    for (var y = -h; y < h; y += step) for (var x = -w; x < w; x += g.measureText(wmText).width + 80) g.fillText(wmText, x, y);
+    // watermark thưa: ~3 dòng chéo mỗi trang, so le, đủ để truy nguồn nhưng không che chữ
+    g.font = '600 ' + Math.max(12, w / 52) + 'px "Be Vietnam Pro",system-ui,sans-serif';
+    g.fillStyle = 'rgba(196,1,2,.055)'; g.textAlign = 'center';
+    var step = Math.max(260, h / 3.2), gap = g.measureText(wmText).width + Math.max(260, w * .45), row = 0;
+    for (var y = -h * .75; y < h * .8; y += step, row++) for (var x = -w + (row % 2) * gap / 2; x < w; x += gap) g.fillText(wmText, x, y);
     g.restore();
     g.font = '600 ' + Math.max(10, w / 85) + 'px system-ui,sans-serif'; g.fillStyle = 'rgba(0,0,0,.45)'; g.textAlign = 'left';
     g.fillText('Cấp phép cho ' + stamp, 12, h - 10);

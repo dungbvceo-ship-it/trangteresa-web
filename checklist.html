@@ -37,10 +37,17 @@ body{background:var(--cream)}
 .sw{width:14px;height:14px;border-radius:4px;border:1px solid rgba(0,0,0,.08)}
 .s0,.cell.s0,.blk.s0{background:#fff}.s1,.cell.s1,.blk.s1{background:#FFE7A8}.s2,.cell.s2,.blk.s2{background:#FFC46B}.s3,.cell.s3,.blk.s3{background:#3FA45E}.s4,.cell.s4,.blk.s4{background:#F4B4B1}
 .gridwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -4px;padding:0 4px}
-.road{border-collapse:separate;border-spacing:6px;min-width:720px}
-.road th{font-size:12px;font-weight:700;color:var(--muted);text-align:center;padding:2px}
-.road th.g b{display:block;color:var(--ink);font-size:13px}
-.road th.r{text-align:left;white-space:nowrap}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.bmap{border-collapse:separate;border-spacing:6px;min-width:860px;width:100%;table-layout:fixed}
+.bmap col.rl{width:92px}
+.bmap thead th{vertical-align:bottom;padding:0 2px 6px;text-align:center}
+.bmap th.g{font-size:12px;font-weight:600;color:var(--muted);line-height:1.35}
+.bmap th.g b{display:block;margin:0 auto 4px;width:fit-content;min-width:36px;padding:3px 8px;border-radius:999px;background:var(--cream);border:1px solid var(--line);color:var(--ink);font-size:13px;font-weight:800}
+.bmap th.g span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bmap th.g.cur b{background:var(--red);border-color:var(--red);color:#fff}
+.bmap th.r{text-align:left;white-space:nowrap;font-size:12px;font-weight:600;color:var(--muted);line-height:1.35;padding-right:4px}
+.bmap th.r b{display:block;color:var(--ink);font-size:13px}
+.bmap td{padding:0}
 .cell{width:100%;min-width:66px;min-height:52px;border-radius:12px;border:1.5px solid var(--line);font:inherit;font-size:13px;font-weight:800;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;color:var(--ink);background:#fff;padding:4px}
 .cell small{font-size:11px;font-weight:600;color:rgba(0,0,0,.55)}
 .cell.t-new{border-style:solid;border-width:2px;border-color:#C40102}
@@ -121,7 +128,7 @@ body{background:var(--cream)}
         <span><i class="sw s0"></i>Chưa bắt đầu</span><span><i class="sw s1"></i>Đã giới thiệu</span><span><i class="sw s2"></i>Đang lặp lại</span><span><i class="sw s3"></i>Thành thạo</span><span><i class="sw s4"></i>Cần ôn lại</span>
         <span>Viền đỏ: bài mới · viền xanh: âm mới · viền nét đứt: ôn tập</span>
       </div>
-      <div class="gridwrap"><table class="road" id="road" aria-label="Bản đồ 31 block"></table></div>
+      <div class="gridwrap"><table class="bmap" id="road" aria-label="Bản đồ 31 block"></table></div>
       <div class="glist" id="glist"></div>
     </div>
   </section>
@@ -245,9 +252,9 @@ body{background:var(--cream)}
       '<div class="stat"><b>' + s.pct + '%</b><span>lộ trình (' + String(s.weeks).replace('.', ',') + '/114,5 tuần)</span></div>' +
       '<div class="stat"><b>' + esc(s.grp[0]) + '</b><span>nhóm ' + esc(s.grp[1]) + '</span></div>' +
       '<div class="stat"><b>' + s.review + '</b><span>block cần ôn lại</span></div>';
-    var h = '<thead><tr><th></th>' + GROUPS.map(function (g) { return '<th class="g"><b>' + g[0] + '</b>' + g[1] + '</th>'; }).join('') + '</tr></thead><tbody>';
+    var h = '<colgroup><col class="rl">' + GROUPS.map(function () { return '<col>'; }).join('') + '</colgroup><thead><tr><th scope="col"><span class="sr">Hàng</span></th>' + GROUPS.map(function (g) { return '<th scope="col" class="g' + (s.grp[0] === g[0] ? ' cur' : '') + '" title="Nhóm ' + g[0] + ': ' + g[1] + '"><b>' + g[0] + '</b><span>' + g[1] + '</span></th>'; }).join('') + '</tr></thead><tbody>';
     for (var r = 8; r >= 0; r--) {
-      h += '<tr><th class="r">' + ROWS[r][0] + '<br>' + ROWS[r][1] + '</th>';
+      h += '<tr><th scope="row" class="r"><b>' + ROWS[r][0] + '</b>' + ROWS[r][1] + '</th>';
       for (var c = 0; c < 9; c++) {
         var b = BLOCKS.filter(function (x) { return x.row === r && x.col === c; })[0];
         if (!b) { h += '<td></td>'; continue; }
