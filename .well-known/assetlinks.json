@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "vn.edu.trangteresa.reader",
+        "sha256_cert_fingerprints": ["C7:F3:B0:32:61:0B:42:1E:55:F7:8A:30:92:13:FE:F6:B2:2A:52:F7:63:15:D1:55:46:0B:EB:6D:16:6C:92:61"]
+      }
+    }]
