@@ -51,6 +51,7 @@ body{background:var(--cream)}
 .box.gift{background:var(--green-50);border:1px solid #CFE6D5}
 .box.clbox{background:#fff;border:2px solid var(--green)}
 .box.up{background:linear-gradient(135deg,#FFF4F2,#fff);border:1px dashed #F0A9A6}
+.nohelp{font-size:14px;color:var(--muted)}.nohelp summary{cursor:pointer;font-weight:700;color:var(--ink);min-height:32px}.nohelp ul{padding-left:18px;margin:8px 0 0;display:flex;flex-direction:column;gap:6px}
 .otp{font-size:26px;letter-spacing:.4em;text-align:center;font-weight:800}
 
 /* ETM Reader – thanh công cụ, bảng tra cứu */
@@ -134,6 +135,14 @@ body{background:var(--cream)}
       <button class="btn btn-line btn-sm" type="button" id="back">Đổi email</button>
     </form>
     <p class="muted" id="lMsg" role="status" style="font-size:14px"></p>
+    <details class="nohelp" id="noCode" hidden><summary>Chưa nhận được mã?</summary>
+      <ul>
+        <li>Xem thư mục <b>Spam</b> hoặc <b>Quảng cáo</b> (Gmail) – thư gửi từ hệ thống Trang Teresa.</li>
+        <li>Mã chỉ gửi cho email có <b>đơn đã thanh toán</b>. Đơn chưa chuyển khoản hoặc đã hết hạn giữ mã sẽ không nhận được mã.</li>
+        <li>Mỗi lần gửi cách nhau 60 giây; mã có hiệu lực 10 phút.</li>
+        <li>Vẫn chưa được? Gọi/Zalo <b id="hlp"></b> kèm mã đơn hoặc ảnh chuyển khoản.</li>
+      </ul>
+    </details>
   </div>
 
   <div id="error" class="state" hidden>
@@ -246,7 +255,7 @@ body{background:var(--cream)}
   $('#f1').addEventListener('submit', function (e) {
     e.preventDefault(); var em = e.target.email.value.trim().toLowerCase();
     $('#lMsg').textContent = 'Đang gửi…';
-    api({ action: 'otp', email: em }).then(function (o) { $('#lMsg').textContent = o.message; $('#f1').hidden = true; $('#f2').hidden = false; $('#f2').otp.focus(); }).catch(net);
+    api({ action: 'otp', email: em }).then(function (o) { $('#lMsg').textContent = o.message; $('#f1').hidden = true; $('#f2').hidden = false; $('#f2').otp.focus(); $('#noCode').hidden = false; $('#hlp').textContent = (T.HOTLINE_NAME ? T.HOTLINE_NAME + ' ' : '') + (T.HOTLINE || ''); }).catch(net);
   });
   $('#back').addEventListener('click', function () { $('#f2').hidden = true; $('#f1').hidden = false; $('#lMsg').textContent = ''; });
   $('#f2').addEventListener('submit', function (e) {
