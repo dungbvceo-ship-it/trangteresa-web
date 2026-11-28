@@ -332,7 +332,7 @@ body{background:var(--cream)}
     .then(function (r) { return r.json(); }).then(function (d) {
       var has = d.ok && d.items.some(function (i) { return i.key === 'CL'; });
       if (has) { try { localStorage.setItem('etm_cl_ok', JSON.stringify({ t: Date.now() })); } catch (e) {} start(); }
-      else if (d.ok) gate('Tài khoản của bạn chưa có Phonics Checklist. Checklist điện tử đi kèm Combo 3, Trọn bộ và Gói Chuyển giao.');
+      else if (d.ok) gate('Tài khoản của bạn chưa có Phonics Checklist. Checklist điện tử đi kèm Gói 3 · READ ME Trọn bộ giáo viên và Gói 4 · READ ME Nhà trường.');
       else if (fresh) start(); else gate('Phiên đăng nhập đã hết hạn. Mở Thư viện để đăng nhập lại.');
     }).catch(function () { if (fresh) start(); else gate('Không có mạng. Lần đầu dùng cần kết nối để xác minh tài khoản.'); });
 })();

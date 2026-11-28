@@ -284,7 +284,7 @@ body{background:var(--cream)}
     });
     if (d.items.some(function (x) { return x.key === 'CL'; })) $('#clBox').hidden = false;
     if (d.bonus) { $('#gift').hidden = false; $('#giftT').textContent = d.bonus + '. ' + (d.support.name || '') + ' sẽ liên hệ đặt lịch với bạn.'; $('#giftC').textContent = 'Hotline/Zalo ' + d.support.hotline; }
-    if (d.upgrade) { $('#up').hidden = false; $('#upT').textContent = d.upgrade.label; if (d.upgrade.pkg === 'CG') { $('#upA').href = 'index.html#chuyen-giao'; $('#upA').textContent = 'Xem Gói Chuyển giao'; $('#up .muted').textContent = 'Đã mua Trọn bộ: 1.999.000đ được trừ vào học phí chuyển giao.'; } }
+    if (d.upgrade) { $('#up').hidden = false; $('#upT').textContent = d.upgrade.label; if (d.upgrade.pkg === 'CG') { $('#upA').href = 'index.html#chuyen-giao'; $('#upA').textContent = 'Xem Gói Nhà trường'; $('#up .muted').textContent = 'Đã mua Gói 3: 1.699.000đ được trừ vào học phí Gói Nhà trường.'; } }
     show('app');
     select(0);
   }

@@ -2,11 +2,11 @@
   'use strict';
   var T = window.TT || {};
   var PKGS = {
-    LT: { name: 'Sách lý thuyết Montessori Phonics', price: 499000 },
-    GC: { name: 'Bộ Giáo cụ · file in', price: 990000 },
-    DUO: { name: 'Bộ đôi: Lý thuyết + Giáo cụ', price: 1399000 },
-    COMBO3: { name: 'Combo 3: Lý thuyết + Checklist + Giáo cụ', price: 1499000 },
-    FULL: { name: 'Trọn bộ: Combo 3 + đào tạo online (2 giờ)', price: 1999000 }
+    LT: { name: 'Gói 1 · READ ME Nền tảng', price: 499000 },
+    DUO: { name: 'Gói 2 · READ ME Lớp học', price: 1299000 },
+    COMBO3: { name: 'Gói 3 · READ ME Trọn bộ giáo viên', price: 1699000 },
+    GC: { name: 'Bộ giáo cụ · file in', price: 990000 },
+    FULL: { name: 'Trọn bộ (gói cũ)', price: 1999000 }
   };
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
@@ -32,7 +32,7 @@
   // ---------- Quy mô: số trang ----------
   $$('[data-pages]').forEach(function (el) { var v = (T.PAGES || {})[el.getAttribute('data-pages')]; if (v) el.textContent = ' · ' + v + ' trang'; });
   // ---------- Đặt trước bộ giáo cụ ----------
-  $$('[data-kind]').forEach(function (a) { a.addEventListener('click', function () { var f = $('#leadForm'); if (f && f.kind) { f.kind.value = a.getAttribute('data-kind'); if (!f.note.value) f.note.value = a.getAttribute('data-kind') === 'kit' ? 'Đặt trước bộ giáo cụ thành phẩm – số lớp/số bộ: ' : 'Gói Chuyển giao – số lớp 3–6 tuổi, số giáo viên: '; } }); });
+  $$('[data-kind]').forEach(function (a) { a.addEventListener('click', function () { var f = $('#leadForm'); if (f && f.kind) { f.kind.value = a.getAttribute('data-kind'); if (!f.note.value) f.note.value = a.getAttribute('data-kind') === 'kit' ? 'Đặt trước bộ giáo cụ thành phẩm – số lớp/số bộ: ' : 'Gói Nhà trường – số lớp 3–6 tuổi, số giáo viên: '; } }); });
 
   // ---------- API ----------
   function api(method, data) {
@@ -162,16 +162,17 @@
   if (ch) {
     var ans = {};
     var REC = {
-      COMBO3: ['Combo 3 – 1.499.000đ', 'Đủ Sách lý thuyết, Checklist từng trẻ và Bộ giáo cụ để bắt đầu ngay trong tuần. Chỉ hơn Bộ đôi 100.000đ nhưng có thêm Checklist trị giá 299.000đ.', 'COMBO3'],
-      FULL: ['Trọn bộ – 1.999.000đ', 'Combo 3 kèm 1 buổi đào tạo online (2 giờ) cùng chuyên gia: cách dạy âm, xếp lộ trình và kệ giáo cụ cho lớp. Nếu sau đó trường đăng ký Chuyển giao, 1.999.000đ được trừ lại.', 'FULL'],
-      FEW: ['Trọn bộ cho trưởng nhóm, rồi Chuyển giao', 'Với 2–5 giáo viên, cách tiết kiệm là trưởng nhóm mua Trọn bộ để dự buổi đào tạo online, sau đó trường đăng ký Chuyển giao – khoản đã trả được trừ vào học phí.', 'FULL'],
-      SCHOOL: ['Gói Chuyển giao nhà trường', '4 buổi đào tạo, slide chi tiết, giáo án Lesson Plan buổi sáng và buổi chiều, bản quyền cho mọi giáo viên – để mọi lớp dạy cùng một chuẩn.', 'LEAD']
+      LT: ['Gói 1 · READ ME Nền tảng – 499.000đ', 'Sách lý thuyết và bản đồ lộ trình 31 blocks: hiểu vì sao và biết con đang ở đâu, làm gì tiếp theo. Nâng cấp lên gói cao hơn bất cứ lúc nào, hệ thống tự trừ số tiền đã trả.', 'LT'],
+      DUO: ['Gói 2 · READ ME Lớp học – 1.299.000đ', 'Thêm bộ giáo cụ file in theo 8 nhóm âm vị để vào lớp ngay trong tuần.', 'DUO'],
+      COMBO3: ['Gói 3 · READ ME Trọn bộ giáo viên – 1.699.000đ', 'Đủ lý thuyết, lộ trình, giáo cụ, Checklist từng trẻ và 1 buổi đào tạo online 2 giờ cùng giảng viên. Nếu sau đó trường đăng ký Gói Nhà trường, 1.699.000đ được trừ lại.', 'COMBO3'],
+      FEW: ['Gói 3 cho trưởng nhóm, rồi Gói Nhà trường', 'Với 2–5 giáo viên: trưởng nhóm mua Gói 3 để dự buổi đào tạo online, sau đó trường đăng ký Gói Nhà trường – khoản đã trả được trừ vào học phí.', 'COMBO3'],
+      SCHOOL: ['Gói 4 · READ ME Nhà trường', '4 Module đào tạo (8 giờ), giáo án 55 bài mẫu + 155 slide bài giảng, 3 tháng giám sát từ xa và bản quyền cho mọi giáo viên.', 'LEAD']
     };
     var render = function () {
       if (!ans.role || !ans.kit || !ans.n) return;
-      var r = ans.n === 'many' || (ans.role === 'ct' && ans.n === 'few') ? REC.SCHOOL : ans.n === 'few' ? REC.FEW : ans.kit === 'co' ? REC.FULL : REC.COMBO3;
+      var r = ans.n === 'many' || (ans.role === 'ct' && ans.n !== '1') ? REC.SCHOOL : ans.n === 'few' ? REC.FEW : ans.kit === 'co' ? REC.COMBO3 : ans.role === 'ph' ? REC.LT : REC.DUO;
       $('#chT').textContent = r[0]; $('#chP').textContent = r[1];
-      $('#chB').innerHTML = r[2] === 'LEAD' ? '<a class="btn btn-white" href="#chuyen-giao">Xem Gói Chuyển giao</a>' : '<button class="btn btn-white" type="button" data-buy="' + r[2] + '">Chọn gói này</button>';
+      $('#chB').innerHTML = r[2] === 'LEAD' ? '<a class="btn btn-white" href="#chuyen-giao">Đăng ký tư vấn</a>' : '<button class="btn btn-white" type="button" data-buy="' + r[2] + '">Chọn gói này</button>';
       var nb = $('#chB [data-buy]'); if (nb) nb.addEventListener('click', function (e) { e.preventDefault(); open(nb.getAttribute('data-buy')); });
     };
     $$('.opts', ch).forEach(function (g) {
@@ -181,6 +182,17 @@
       }); });
     });
   }
+  // ---------- Nhận xét thực tế (chỉ hiện khi có dữ liệu thật trong testimonials.json) ----------
+  var ts = $('#nhan-xet');
+  if (ts) fetch('testimonials.json', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : []; }).then(function (list) {
+    if (!Array.isArray(list) || !list.length) return;
+    var esc = function (t) { var d = document.createElement('div'); d.textContent = t || ''; return d.innerHTML; };
+    $('#testi').innerHTML = list.map(function (t) {
+      return '<figure>' + (t.img ? '<img src="' + esc(t.img) + '" alt="' + esc(t.alt || t.name) + '" loading="lazy">' : '') +
+        '<blockquote>“' + esc(t.quote) + '”</blockquote><figcaption><b>' + esc(t.name) + '</b>' + (t.role ? ' · ' + esc(t.role) : '') + '</figcaption></figure>';
+    }).join('');
+    ts.hidden = false;
+  }).catch(function () {});
   // ---------- Form đào tạo ----------
   var lf = $('#leadForm');
   if (lf) lf.addEventListener('submit', function (e) {

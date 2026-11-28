@@ -7,7 +7,7 @@ window.TT = {
   // Tài khoản nhận tiền (giống landing page Leading AI) – dùng cho chế độ dự phòng
   BANK_ID: 'BIDV',
   BANK_LABEL: 'BIDV',
-  ACCOUNT_NO: '4504629391',
+  ACCOUNT_NO: '962478JV92',     // số tài khoản ảo (VA) BIDV qua SePay – bắt buộc để đơn tự xác nhận
   ACCOUNT_NAME: 'BUI VIET DUNG',
   // Liên hệ đào tạo – chuyển giao
   HOTLINE: '0392 387 925',
