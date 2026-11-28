@@ -458,3 +458,73 @@ dl.bank dt{color:var(--muted)}dl.bank dd{margin:0;font-weight:700;overflow-wrap:
 @media (max-width:620px){.pricing.four{grid-template-columns:1fr}}
 .bg-dark .formbox,.bg-dark .formbox label,.bg-dark .formbox h3{color:var(--ink)}
 .bg-dark .formbox .muted{color:var(--muted)}
+
+/* ===== Bố cục cân đối (28/11 – vòng 2) ===== */
+/* Tiêu đề mục: 2 cột (tiêu đề trái – mô tả phải) cho cân đối trên máy tính */
+@media (min-width:980px){
+  .head:not(.center){display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);column-gap:56px;row-gap:10px;max-width:none;align-items:end}
+  .head:not(.center) .eyebrow{grid-column:1;grid-row:1;justify-self:start}
+  .head:not(.center) .h2,.head:not(.center) .h3{grid-column:1;grid-row:2}
+  .head:not(.center) .lead{grid-column:2;grid-row:1/span 2;align-self:end;margin:0}
+}
+.h2{text-wrap:balance}
+/* Hero gọn, ảnh và chữ cân nhau; 2 lối đi bằng chiều cao */
+.hero .wrap{align-items:center;padding-top:48px}
+.hero h1{font-size:clamp(34px,4.4vw,54px)}
+.hero-img{align-self:center}
+.paths{align-items:stretch;padding-bottom:40px;margin-top:8px}
+.path{justify-content:center;min-height:112px}
+.strip .wrap{align-items:start}
+/* 6 tầng: nhãn luôn nằm đáy thẻ */
+.layers li>div{display:flex;flex-direction:column;align-items:flex-start;height:100%}
+.layers li .lt{margin-top:auto}
+.layers li p{margin-bottom:10px}
+/* Bảng giá: 4 thẻ cao bằng nhau, nút thẳng hàng */
+.pricing.four{align-items:stretch;gap:18px;padding-top:14px}
+.pricing.four .plan{padding:30px 22px 22px}
+.pricing.four .plan h3{min-height:2.6em;display:flex;align-items:flex-end}
+.pricing.four .plan .for{min-height:3.2em}
+.pricing.four .plan .p{min-height:44px;align-items:center}
+.pricing.four .plan .now{font-size:34px}
+.pricing.four .plan .save{min-height:28px;display:flex;align-items:center}
+.plan .save.green{background:var(--green-50);color:var(--green)}
+.pricing.four .plan ul{flex:1}
+.pricing.four .plan .btn{margin-top:auto}
+.pricing.four .plan .hint{margin:0;min-height:2.6em}
+.pricing.four .plan:not(.hot) .btn{margin-bottom:calc(2.6em + 14px)}
+/* Mua 3 bước + quyền lợi: 2 hàng ngang gọn */
+.buyinfo{grid-template-columns:1fr;gap:16px}
+.buyinfo .steps,.buyinfo .protect{grid-template-columns:repeat(3,minmax(0,1fr))}
+.buyinfo .steps li{padding:18px 20px}
+/* Gói Nhà trường: 4 Module thành một hàng ngang dưới cùng */
+#chuyen-giao .cg-grid{align-items:start}
+#chuyen-giao>.wrap>.cg-days{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:36px}
+#chuyen-giao>.wrap>.cg-days li{grid-template-columns:1fr;align-content:start}
+#chuyen-giao>.wrap>.cg-days span{grid-row:auto;justify-self:start;padding:6px 12px}
+.cg-get li{height:100%}
+/* Hỏi đáp 2 cột */
+@media (min-width:980px){.faq{max-width:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}}
+@media (max-width:980px){
+  .buyinfo .steps,.buyinfo .protect{grid-template-columns:1fr}
+  #chuyen-giao>.wrap>.cg-days{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pricing.four .plan h3,.pricing.four .plan .for,.pricing.four .plan .hint{min-height:0}
+  .pricing.four .plan:not(.hot) .btn{margin-bottom:0}
+}
+@media (max-width:620px){#chuyen-giao>.wrap>.cg-days{grid-template-columns:1fr}}
+/* Bảng giá: dùng subgrid để mọi hàng (tên, giá, ưu đãi, danh sách, nút) thẳng hàng giữa 4 gói */
+@media (min-width:1101px){
+  .pricing.four{grid-template-rows:repeat(8,auto);row-gap:0}
+  .pricing.four .plan{grid-row:span 8;display:grid;grid-template-rows:subgrid;row-gap:12px}
+}
+.pricing.four .plan h3,.pricing.four .plan .for,.pricing.four .plan .p,.pricing.four .plan .hint{min-height:0}
+.pricing.four .plan:not(.hot) .btn{margin-bottom:0}
+.pricing.four .plan .now{font-size:30px}
+.pricing.four .plan .now.sm{font-size:22px}
+.pricing.four .plan .p{align-items:baseline}
+.pricing.four .plan .save{align-self:start;justify-self:start}
+.plan .save.soft{background:#F4F1EF;color:var(--muted)}
+.pricing.four .plan .hint{font-size:13px;color:var(--muted);text-align:center;align-self:start}
+.pricing.four .plan .btn{align-self:end}
+.pricing.four .plan.hot{transform:none}
+.pricing.four .plan h3{font-size:19px;display:block}
+.pricing.four .plan .save{font-size:13px}
